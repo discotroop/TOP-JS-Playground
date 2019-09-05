@@ -1,4 +1,4 @@
-console.log("test");
+// Library
 
 function Book(title, author, pages, read) {
     this.title = title;
@@ -11,9 +11,9 @@ function Book(title, author, pages, read) {
     }
 }
 
-// TOP NOTES: It is almost always better to return things and console.log them
-// later rather than console.log(ing) in a function.
-
-const captain = new Book("Captains Courageous, ", "Rudyard Kipling, ", "200, ", "yes")
-
-console.log(captain.info());
+let library = {
+    myLibrary: [],
+    addBookToLibrary: function(title, author, pages, read) {
+        this.myLibrary.push(new Book(title, author, pages, read));
+    },
+}
