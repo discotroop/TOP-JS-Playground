@@ -17,31 +17,28 @@ function Book(title, author, pages, read) {
 }
 
 let library = {
-    books: ["this", "is", "a", "test", "me"],
+    books: [],
 
     addBookToLibrary: function(title, author, pages, read) {
         this.books.push(new Book(title, author, pages, read));
     },
 
     render: function(libraryArray, libraryDOM) {
-        this.books.forEach(function(book) {
-            let libraryCard = document.createElement("p");
+        libraryArray.forEach(function(book) { /*this.books can be used in place of library array */
+            let libraryCard = document.createElement("div");
+            libraryCard.innerHTML = 
+                `<p> Title: ${book.title} </p>
+                <p> Author: ${book.author} </p>
+                <p> Pages: ${book.pages} </p>
+                <p> Read: ${book.read} </p>`;
             libraryCard.setAttribute("class", "libraryCard");
-            libraryCard.innerText = book;
+            // libraryCard.innerText = book;
             console.log(libraryCard.innerText);
             libraryDOM.appendChild(libraryCard);
+
         })
 
-        // for (let i = 0; i < libraryArray.length; i++) {
-        //     console.log(i);
-        //     libraryDOM.appendChild(libraryCard.cloneNode());
-        // };
-        // let i = 0;
-        // while (i < libraryArray.length) {
-        //     libraryDOM.appendChild(libraryCard.cloneNode());
-        //     i++;
-        // }
-
+        // write function createBooksCard
     }
 }
 library.addBookToLibrary("hucklyberry finn", "mark twain", "800", "read");
