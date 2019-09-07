@@ -14,10 +14,11 @@ Version 2: Moving to the DOM.
 Part 1:
 // 1. write render() to loop through myLibrary and display the contents on the page.
     a. display items either in table or on their own "card"
+
 2. add "New Book" button.
-    a. It should bring up a form.
-    b. form should have inputs for author, title, and page number
-    c. form should have radial for read/not read.
+//    a. It should bring up a form.
+//    b. form should have inputs for author, title, and page number
+//    c. form should have radial for read/not read.
     d. form should call addBookToLibrary with proper inputs.
     e. form should call render after addBookToLibrary has run.
 

@@ -5,3 +5,8 @@
 .libraryCard {
     background-color: lightcoral;
 }
+
+#newBookForm {
+    /* display: none; */
+    background-color: lightgreen;
+}

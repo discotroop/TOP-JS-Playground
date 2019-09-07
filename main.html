@@ -3,9 +3,41 @@
 </head>
 
 <body>
-<div id="library">
-    <p> test. </p> 
-</div>
+    
+<div id="header">
+    <h1>Library Catalogue:</h1>
+    <div class="controls">
+        <button id="newBook"> New Book </button>
+    </div>
+
+    <!-- action="/script.js" -->
+    <div id="newBookForm" >
+            <p> <button>Cancel</button></p>
+            <p> Title: <input id="title" type="text"></p>
+            <p> Author: <input id="author" type="text"></p>
+            <p> Pages: <input id="pages" type="number"></p>
+            <p> Read: <input name="read" type="radio" value="yes" checked> Yes 
+                    <input name="read" type="radio" value="no"> No
+                    <button id="submit"> Submit </button>
+            </p>
+        </div>
+
+
+    </div>
+
+<div id = "library"> </div>
+
+<!-- build form element then toggle it's display on click -->
+<!-- use css to center it over the screen -->
+
+<!-- <form id="newBookForm">
+    <p> Title: <input name="title" type="text"></p>
+    <p> Author: <input name="author" type="text"></p>
+    <p> Pages: <input name="pages" type="number"></p>
+    <p> Read: <input name="read" type="radio" value="yes" checked> 
+                   <input name="read" type="radio" value="no">
+                </p>
+</form> -->
 
 
 </body>
