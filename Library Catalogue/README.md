@@ -11,6 +11,9 @@ Functionality:
 
 All functionality is built with vanilla Javascript, html and css.
 
+Errors:
+1. Remove and Read buttons appear to be stepping on each others toes.
+
 To Do: 9-9-19
 1. Style with CSS... it looks quite said now.
 2. Refactor JS, fix scope, shuffle some objects, etc.

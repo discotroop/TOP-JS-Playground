@@ -17,9 +17,9 @@ let handlers = {
         });
     },
     removeBook: function() {
-        let buttons = document.querySelectorAll(".remove");
-        buttons.forEach(function (button) {
-            button.addEventListener("click", function(e) {
+        let books = document.querySelectorAll(".remove");
+        books.forEach(function (book) {
+            book.addEventListener("click", function(e) {
                 let index = e.srcElement.parentNode.data;
                 library.removeBook(index);
             });
@@ -34,10 +34,7 @@ let handlers = {
             });
         });
     }
-
 }
-
-// Book constructor.
 function Book(title, author, pages, read) {
     this.title = title;
     this.author = author;
@@ -50,12 +47,10 @@ function Book(title, author, pages, read) {
 }
 
 let library = {
-    books: [],
-
+    books: [], /* easy to miss */
     addBookToLibrary: function(title, author, pages, read) {
         this.books.push(new Book(title, author, pages, read));
     },
-
     render: function(libraryArray, libraryDOM) {
         libraryDOM.innerHTML = "";
         for (let i = 0; i < libraryArray.length; i++) {
@@ -72,18 +67,14 @@ let library = {
             libraryDOM.appendChild(libraryCard);
         }
     },
-
     setFormDisplay: function () {
         let formDisplayed = handlers.newBookForm.hidden;
-        
-        // I can get it with formDisplayed but I can't set it with formDisplayed
-        if (formDisplayed === false) {
+                if (formDisplayed === false) {
             handlers.newBookForm.hidden = true;
         } else if (formDisplayed === true) {
             handlers.newBookForm.hidden = false;
         }
     },
-
     addBookFromDOM: function () {
         let title = document.querySelector("#title").value;
         let author = document.querySelector("#author").value;
@@ -92,13 +83,11 @@ let library = {
         this.addBookToLibrary(title, author, pages, read);
         this.render(this.books, handlers.getLibraryDiv);
     },
-
     removeBook: function (index) {
         this.books.splice(index, 1);
         this.render(this.books, handlers.getLibraryDiv);
         handlers.removeBook();
     },
-
     toggleRead: function(index) {
         let readStatus = this.books[index].read;
         if (readStatus === "yes") {
@@ -108,19 +97,15 @@ let library = {
         }
         this.render(this.books, handlers.getLibraryDiv);
         handlers.toggleRead();
+    },
+    init: function () {
+        library.render(library.books, handlers.getLibraryDiv)
+        handlers.newBookClicked();
+        library.setFormDisplay();
+        handlers.submitNewBook();
+        handlers.removeBook();
+        handlers.toggleRead(); 
     }
-
-
 }
 
-library.render(library.books, handlers.getLibraryDiv)
-
-handlers.newBookClicked();
-
-library.setFormDisplay();
-
-handlers.submitNewBook();
-
-handlers.removeBook();
-
-handlers.toggleRead();
+library.init();
