@@ -1,0 +1,21 @@
+h1 {
+    background-color: lightgrey;
+}
+
+.boardContainer {
+    background-color: lightcoral;
+    width: 500px;
+    height: 500px;
+    display: grid;
+    grid-template-rows: auto auto auto;
+    grid-template-columns: auto auto auto;
+    justify-content: space-evenly;
+}
+
+.gridBox {
+    background-color: lightseagreen;
+    margin: 10px;
+    width: 150px;
+    text-align: center;
+    vertical-align: middle;
+}
