@@ -1,4 +1,3 @@
-// Library
 let handlers = {
     getLibraryDiv: document.querySelector("#library"),
     newBookForm: document.querySelector("#newBookForm"),
@@ -8,15 +7,34 @@ let handlers = {
             library.setFormDisplay();
         });
     },
-    tester: function() {
+    submitNewBook: function() {
         submitForm = document.querySelector("#submit");
         submitForm.addEventListener("click", function() {
-            console.log(submitForm.value);
-            console.log("clicked submit");
             library.addBookFromDOM();
             library.setFormDisplay();
+        handlers.removeBook();
+        handlers.toggleRead();    
         });
     },
+    removeBook: function() {
+        let buttons = document.querySelectorAll(".remove");
+        buttons.forEach(function (button) {
+            button.addEventListener("click", function(e) {
+                let index = e.srcElement.parentNode.data;
+                library.removeBook(index);
+            });
+        });
+    },
+    toggleRead: function() {
+        let buttons = document.querySelectorAll(".read");
+        buttons.forEach(function (button) {
+            button.addEventListener("click", function(e) {
+                let index = e.srcElement.parentNode.data;
+                library.toggleRead(index);
+            });
+        });
+    }
+
 }
 
 // Book constructor.
@@ -40,19 +58,19 @@ let library = {
 
     render: function(libraryArray, libraryDOM) {
         libraryDOM.innerHTML = "";
-        libraryArray.forEach(function(book) { /*this.books can be used in place of library array */
+        for (let i = 0; i < libraryArray.length; i++) {
             let libraryCard = document.createElement("div");
+            libraryCard.data = i;
             libraryCard.innerHTML = 
-                `<p> Title: ${book.title} </p>
-                <p> Author: ${book.author} </p>
-                <p> Pages: ${book.pages} </p>
-                <p> Read: ${book.read} </p>`;
+                `<p> Title: ${libraryArray[i].title} </p>
+                <p> Author: ${libraryArray[i].author} </p>
+                <p> Pages: ${libraryArray[i].pages} </p>
+                <p> Read: ${libraryArray[i].read} </p>
+                <button class="remove">Remove</button>
+                <button class="read">Read</button>`;
             libraryCard.setAttribute("class", "libraryCard");
-            // libraryCard.innerText = book;
-            console.log(libraryCard.innerText);
             libraryDOM.appendChild(libraryCard);
-
-        })
+        }
     },
 
     setFormDisplay: function () {
@@ -75,9 +93,25 @@ let library = {
         this.render(this.books, handlers.getLibraryDiv);
     },
 
+    removeBook: function (index) {
+        this.books.splice(index, 1);
+        this.render(this.books, handlers.getLibraryDiv);
+        handlers.removeBook();
+    },
+
+    toggleRead: function(index) {
+        let readStatus = this.books[index].read;
+        if (readStatus === "yes") {
+            this.books[index].read = "no";
+        } else {
+            this.books[index].read = "yes";
+        }
+        this.render(this.books, handlers.getLibraryDiv);
+        handlers.toggleRead();
+    }
+
 
 }
-library.addBookToLibrary("hucklyberry finn", "mark twain", "800", "read");
 
 library.render(library.books, handlers.getLibraryDiv)
 
@@ -85,4 +119,8 @@ handlers.newBookClicked();
 
 library.setFormDisplay();
 
-handlers.tester();
+handlers.submitNewBook();
+
+handlers.removeBook();
+
+handlers.toggleRead();

@@ -13,19 +13,19 @@ Library:
 Version 2: Moving to the DOM.
 Part 1:
 // 1. write render() to loop through myLibrary and display the contents on the page.
-    a. display items either in table or on their own "card"
+//    a. display items either in table or on their own "card"
 
 2. add "New Book" button.
 //    a. It should bring up a form.
 //    b. form should have inputs for author, title, and page number
 //    c. form should have radial for read/not read.
-    d. form should call addBookToLibrary with proper inputs.
-    e. form should call render after addBookToLibrary has run.
+//    d. form should call addBookToLibrary with proper inputs.
+//    e. form should call render after addBookToLibrary has run.
 
-Part 2.: Removing Elements:
-1. Add "remove" button to each book in catalogue.
-    a. "you will need to associate your DOM elements with the actual boook obects."
-    b. "you can give them a data-attribute that corresponds to the index in the library array.
+// Part 2.: Removing Elements: (might need to change to a for or while loop to make this work)
+// 1. Add "remove" button to each book in catalogue.
+//    a. "you will need to associate your DOM elements with the actual boook obects."
+//    b. "you can give them a data-attribute that corresponds to the index in the library array.
 
 2. Add a button on each book to change its read status.
     a. write function to toggle read status
