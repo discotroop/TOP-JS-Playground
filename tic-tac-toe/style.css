@@ -20,7 +20,17 @@ h1 {
     vertical-align: middle;
 }
 
+.gridBox:hover {
+    background-color: lightgrey;
+}
+
 h3 {
     margin: 0 auto;
     font-size: 120px;
+}
+
+.testDiv {
+    width: 500px;
+    height: 500px;
+    background-color: lightskyblue;
 }
