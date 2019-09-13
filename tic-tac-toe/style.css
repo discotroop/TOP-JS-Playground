@@ -16,12 +16,17 @@ h1 {
     background-color: lightseagreen;
     margin: 10px;
     width: 150px;
+    height: 150px;
     text-align: center;
     vertical-align: middle;
 }
 
 .gridBox:hover {
     background-color: lightgrey;
+} 
+
+.filled:hover {
+    background-color: lightsalmon;
 }
 
 h3 {
