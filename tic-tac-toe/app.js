@@ -6,6 +6,10 @@ let game = {
             // a player one won
             // b player two won.
 
+    // how many victories are there?
+    // 11
+    // 3 up, 3 down, two diagonals.    
+
     playerOne: {name: "bob", marker: "x"},
     playerTwo: {name: "suzy", marker: "0"},
 
@@ -13,13 +17,39 @@ let game = {
         let currentState = gameBoard.boardArray;
         for (let i = 0; i < currentState.length; i ++) {
             if (currentState[i] === "") {
-                console.log("no");
                 return "no";
-            } else {
-                console.log("yes");
             }
         }
         return "yes";
+    },
+
+    victory: function (marker) {
+        let victories = [[0,1,2], [3,4,5], [6,7,8], [0,3,6], [1,4,7], [2,5,8], [0,4,8], [2,4,6]];
+        let tooCheck = gameBoard.boardArray;
+        let result = "no";
+        let w = 0;
+
+        for (let i = 0; i < victories.length; i++) {
+            let victory = victories[i]
+            for (let j = 0; j < victory.length; j++) {
+                if (tooCheck[victory[j]] === marker) {
+                    w++;
+                    if (w === 3) {
+                        return "victory";
+                    }
+                } else {
+                    w=w;
+                }
+                if (w === 3) {
+                    result = "victory";
+                } else {
+                    result = "no";
+                }
+            }
+            w = 0;
+        }
+        console.log(result);
+        return result;
     },
     
     gameRound: function (player) {
@@ -35,12 +65,14 @@ let game = {
                     tile.classList.add("filled");
                     gameBoard.populateBoard();
                     marker = "";
+                    game.victory(marker);
                     game.switchPlayer(currentPlayer);
                 } else {
                     gameBoard.populateBoard();
                 }
             });
         });
+
         if (game.draw() === "yes") {
             console.log("over");
         }
@@ -48,21 +80,18 @@ let game = {
 
     switchPlayer: function (player) {
         let switchedPlayer = player;
-        console.log(switchedPlayer);
         if (player === this.playerOne) {
-            console.log(this.playerTwo);
             switchedPlayer = game.playerTwo;
         } else if (player === this.playerTwo) {
             switchedPlayer = game.playerOne;
         }
-        console.log(switchedPlayer);
-        console.log(typeof switchedPlayer);
         return this.gameRound(switchedPlayer);
     },
 }
 
 let gameBoard = {
-    boardArray: ["","","x","","","","","","",""],
+    boardArray: ["o","o","o","","","","","","",""],
+
     populateBoard: function () {
         let tiles = document.querySelectorAll("h3");
         for (let i = 0; i < tiles.length; i++) {
