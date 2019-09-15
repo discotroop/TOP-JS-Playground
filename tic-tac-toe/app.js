@@ -41,21 +41,27 @@ let game = {
         return result;
     },
     
-    gameRound: function (player) {
-        let marker = player.marker;
+    gameRound: function () {
+        let currentPlayer = game.playerOne;
+        if (game.isPlayerOne) {
+            currentPlayer = game.playerOne;
+        } else {
+            currentPlayer = game.playerTwo;
+        }
+        let marker = currentPlayer.marker;
         let tiles = document.querySelectorAll(".gridBox");
-        let currentPlayer = player;
-
+        
         tiles.forEach(function(tile) {
             tile.addEventListener("click", function() {
                 let index = (tile.firstChild.attributes.data.value);
                 if (gameBoard.boardArray[index] === "") {
                     gameBoard.boardArray[index] = marker;
                     tile.classList.add("filled");
-                    gameBoard.populateBoard();
                     marker = "";
                     game.victory(marker);
                     game.switchPlayer(currentPlayer);
+                    gameBoard.populateBoard();
+
                 } else {
                     gameBoard.populateBoard();
                 }
@@ -67,14 +73,9 @@ let game = {
         }
     },
 
-    switchPlayer: function (player) {
-        let switchedPlayer = player;
-        if (player === this.playerOne) {
-            switchedPlayer = game.playerTwo;
-        } else if (player === this.playerTwo) {
-            switchedPlayer = game.playerOne;
-        }
-        return this.gameRound(switchedPlayer);
+    switchPlayer: function () {
+        game.isPlayerOne = !game.isPlayerOne;
+        return this.gameRound();
     },
 }
 
@@ -109,11 +110,11 @@ let gameBoard = {
             let index = (tile.attributes.data.value);
             tile.innerText = gameBoard.boardArray[index].toUpperCase();
         });
-        this.boardArray.length = 9;
+        this.boardArray.length = 9;        
     },
 
     init: function () {
-        return game.gameRound(game.playerOne);
+        return game.gameRound();
     },
 }
 gameBoard.populateBoard();
