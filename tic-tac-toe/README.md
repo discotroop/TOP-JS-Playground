@@ -1,5 +1,9 @@
 Tic-Tac-Toe for the Odin Project.
 
+To Do: 
+1. stylize title,
+2. display player name and allow players to change it.
+
 // 1. Store gameboard inside of Array in gameboard object
 2. players should be storer in objects.
 3. object to control flow of game as well.

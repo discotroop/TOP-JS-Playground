@@ -1,6 +1,7 @@
 let game = {  
-    playerOne: {name: "bob", marker: "x"},
-    playerTwo: {name: "suzy", marker: "0"},
+    playerOne: {which: "Player 1", name: "Bob", marker: "x"},
+    playerTwo: {which: "Player 2", name: "Suzy", marker: "0"},
+    isPlayerOne: true,
 
     draw: function () {
         let currentState = gameBoard.boardArray;
@@ -80,8 +81,22 @@ let game = {
 let gameBoard = {
     boardArray: ["","","","","","","","","",""],
 
-    init: function () {
-        return game.gameRound(game.playerOne);
+    displayPlayerName: function (player) {
+        let nameSpace = document.querySelector(".gameContainer>div>h2");
+        nameSpace.innerText = `${player.which} : ${player.name}`;
+    },
+
+    getPlayerName: function () {
+        let newName = prompt("What's your name?", "name");
+        return newName;
+    },
+
+    changePlayerName: function () {
+        let changeNameClicked = document.querySelector(".gameContainer>div>button");
+        changeNameClicked.addEventListener("click", function () {
+            console.log("clicked");
+            gameBoard.getPlayerName();
+        })
     },
 
     populateBoard: function () {
@@ -95,10 +110,15 @@ let gameBoard = {
             tile.innerText = gameBoard.boardArray[index].toUpperCase();
         });
         this.boardArray.length = 9;
-    }
+    },
+
+    init: function () {
+        return game.gameRound(game.playerOne);
+    },
 }
 gameBoard.populateBoard();
 gameBoard.init();
+gameBoard.changePlayerName();
 
 let testArea = {
     clickTest: function() {

@@ -9,6 +9,16 @@
     text-align: center;
 }
 
+.playerNames {
+    text-align: center;
+}
+
+.gameContainer>h2 {
+    font-family: arial;
+    font-size: 30px;
+    text-align: center;
+}
+
 .boardContainer {
     background-color: lightcoral;
     width: 500px;
