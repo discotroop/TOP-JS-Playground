@@ -1,15 +1,4 @@
-let game = {
-    // What does the game need?
-    // set end conditions.
-        // one board is full
-        // two a player has won.
-            // a player one won
-            // b player two won.
-
-    // how many victories are there?
-    // 11
-    // 3 up, 3 down, two diagonals.    
-
+let game = {  
     playerOne: {name: "bob", marker: "x"},
     playerTwo: {name: "suzy", marker: "0"},
 
@@ -48,7 +37,6 @@ let game = {
             }
             w = 0;
         }
-        console.log(result);
         return result;
     },
     
@@ -90,7 +78,11 @@ let game = {
 }
 
 let gameBoard = {
-    boardArray: ["o","o","o","","","","","","",""],
+    boardArray: ["","","","","","","","","",""],
+
+    init: function () {
+        return game.gameRound(game.playerOne);
+    },
 
     populateBoard: function () {
         let tiles = document.querySelectorAll("h3");
@@ -106,7 +98,7 @@ let gameBoard = {
     }
 }
 gameBoard.populateBoard();
-game.gameRound(game.playerTwo);
+gameBoard.init();
 
 let testArea = {
     clickTest: function() {

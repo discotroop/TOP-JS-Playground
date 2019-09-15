@@ -1,5 +1,12 @@
-h1 {
-    background-color: lightgrey;
+.gameContainer {
+    background-color: lightcoral;
+    width: 500px;
+}
+
+.gameContainer>h1 {
+    font-family: arial;
+    font-size: 50px;
+    text-align: center;
 }
 
 .boardContainer {

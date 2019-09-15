@@ -9,7 +9,7 @@ Rule of thumb:
 --IF you need MULTIPLE of something use factories.
 
 // 4. Write js to render contents of array to game board.
-5. Write js to let players are to game board in DOM by clicking.
+// 5. Write js to let players are to game board in DOM by clicking.
     a. remember to prevent clicking on played areas.
 
 Big NOTE "Think carefully about where each bit of logic should reside. Each little piece of functionality should be able to fit in the:
@@ -28,27 +28,3 @@ Optional - If you’re feeling ambitious create an AI so that a player can play 
     Start by just getting the computer to make a random legal move.
     Once you’ve gotten that, work on making the computer smart. It is possible to create an unbeatable AI using the minimax algorithm (read about it here, some googling will help you out with this one)
     If you get this running definitely come show it off in the chatroom. It’s quite an accomplishment!
-
-let game = {
-    playerOne: {name: "playerOne"},
-    playerTwo: {name: "playerTwo"},
-    
-    gameRound: function (passedPlayer) {
-        let player = passedPlayer;
-        let tiles = document.querySelectorAll(".gridBox");
-        tiles.forEach(function(tile) {
-            tile.addEventListener("click", gamePlay(tile, player));
-            });
-
-        function gamePlay (tile, player) {
-            console.log(player);
-            let index = (tile.firstChild.attributes.data.value);
-                if (player === "playerOne") {
-                gameBoard.boardArray[index] = "x";
-                } else if (player === "playerTwo") {
-                gameBoard.boardArray[index] = "o";
-                }
-                gameBoard.populateBoard();
-        }
-    }
-}
