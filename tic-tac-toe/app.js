@@ -10,81 +10,111 @@ let game = {
                 return "no";
             }
         }
+        this.setNewGame();
         return "yes";
     },
 
-    victory: function (marker) {
+    victory: function () {
         let victories = [[0,1,2], [3,4,5], [6,7,8], [0,3,6], [1,4,7], [2,5,8], [0,4,8], [2,4,6]];
         let tooCheck = gameBoard.boardArray;
         let result = "no";
         let w = 0;
+        let currentPlayer = this.getCurrentPlayer();
+        let marker = currentPlayer.marker;
 
         for (let i = 0; i < victories.length; i++) {
             let victory = victories[i]
             for (let j = 0; j < victory.length; j++) {
                 if (tooCheck[victory[j]] === marker) {
                     w++;
+                    console.log(w)
                     if (w === 3) {
-                        return "victory";
+                        result = "yes";
+                        return result;
                     }
                 } else {
                     w=w;
                 }
-                if (w === 3) {
-                    result = "victory";
-                } else {
-                    result = "no";
-                }
             }
             w = 0;
         }
+        this.setNewGame();
         return result;
     },
-    
-    gameRound: function () {
+    getCurrentPlayer: function () {
         let currentPlayer = game.playerOne;
         if (game.isPlayerOne) {
             currentPlayer = game.playerOne;
         } else {
             currentPlayer = game.playerTwo;
         }
+        return currentPlayer;
+    },
+
+    moves: function (tile) {
+        let index = (tile.firstChild.attributes.data.value);
+        return index;
+    },
+
+    gameRound: function () {
+        let currentPlayer = this.getCurrentPlayer();
         let marker = currentPlayer.marker;
         let tiles = document.querySelectorAll(".gridBox");
-        
+        gameBoard.displayPlayerName();
+
         tiles.forEach(function(tile) {
             tile.addEventListener("click", function() {
                 let index = (tile.firstChild.attributes.data.value);
                 if (gameBoard.boardArray[index] === "") {
                     gameBoard.boardArray[index] = marker;
                     tile.classList.add("filled");
-                    marker = "";
-                    game.victory(marker);
-                    game.switchPlayer(currentPlayer);
-                    gameBoard.populateBoard();
-
+                    endMove();
+                    marker = game.getCurrentPlayer().marker;
                 } else {
                     gameBoard.populateBoard();
                 }
             });
         });
-
-        if (game.draw() === "yes") {
-            console.log("over");
-        }
+        let endMove = function () {
+            gameBoard.populateBoard();
+            game.checkForEndGame();
+            game.switchPlayer();
+        };
     },
 
     switchPlayer: function () {
         game.isPlayerOne = !game.isPlayerOne;
-        return this.gameRound();
+        gameBoard.displayPlayerName();
     },
-}
+
+    checkForEndGame: function () {
+        let victory = this.victory();
+        let draw = this.draw();
+        if (victory === "yes") {
+            gameBoard.victory();
+        } else if (draw === "yes") {
+            gameBoard.draw();
+        } else {
+            return;
+        }
+    },
+
+    setNewGame: function () {
+        let click = gameBoard.victoryBoard.newGame;
+        click.addEventListener("click", function () {
+            gameBoard.newGame();
+        });
+    },
+
+ }
 
 let gameBoard = {
     boardArray: ["","","","","","","","","",""],
 
-    displayPlayerName: function (player) {
+    displayPlayerName: function () {
+        let currentPlayer = game.getCurrentPlayer();
         let nameSpace = document.querySelector(".gameContainer>div>h2");
-        nameSpace.innerText = `${player.which} : ${player.name}`;
+        nameSpace.innerText = `${currentPlayer.which} : ${currentPlayer.name}`;
     },
 
     getPlayerName: function () {
@@ -95,9 +125,11 @@ let gameBoard = {
     changePlayerName: function () {
         let changeNameClicked = document.querySelector(".gameContainer>div>button");
         changeNameClicked.addEventListener("click", function () {
-            console.log("clicked");
-            gameBoard.getPlayerName();
-        })
+            let newName = gameBoard.getPlayerName();
+            let currentPlayer = game.getCurrentPlayer();
+            currentPlayer.name = newName;
+            return gameBoard.displayPlayerName(currentPlayer);
+        });
     },
 
     populateBoard: function () {
@@ -110,24 +142,46 @@ let gameBoard = {
             let index = (tile.attributes.data.value);
             tile.innerText = gameBoard.boardArray[index].toUpperCase();
         });
-        this.boardArray.length = 9;        
+        this.boardArray.length = 9;
+        this.displayPlayerName();        
     },
 
     init: function () {
-        return game.gameRound();
+        return gameBoard.populateBoard(),
+        gameBoard.displayPlayerName(),
+        gameBoard.changePlayerName(),
+        game.gameRound();
+    }, 
+    victoryBoard: {
+        div: document.querySelector(".endGame"),
+        newGame: document.querySelector(".endGame>button"),
+        h2: document.querySelector(".endGame>h2")
     },
-}
-gameBoard.populateBoard();
-gameBoard.init();
-gameBoard.changePlayerName();
 
-let testArea = {
-    clickTest: function() {
-        let testA = document.querySelector(".testDiv");
-        testA.addEventListener("click", function() {
-            console.log("clicked");
-        });
+    newGame: function () {
+        this.boardArray = ["","","","","","","","","",""],
+        game.isPlayerOne = true;
+        this.populateBoard();
+        this.victoryBoard.div.classList.add("invisible");
+        this.victoryBoard.h2.classList.add("invisible");
+        this.victoryBoard.newGame.classList.add("invisible");
+    },
+
+    victory: function () {
+        let winner = document.querySelector(".endGame>h2");
+        winner.innerText = `Victory! ${game.getCurrentPlayer().name} Won!`;
+        this.victoryBoard.div.classList.remove("invisible");
+        this.victoryBoard.h2.classList.remove("invisible");
+        this.victoryBoard.newGame.classList.remove("invisible");
+    },
+
+    draw: function () {
+        let textDisplay = document.querySelector(".endGame>h2");
+        textDisplay.innerText = `It's a tie! better luck next time ${game.playerOne.name} and ${game.playerTwo.name}`;
+        this.victoryBoard.div.classList.remove("invisible");
+        this.victoryBoard.h2.classList.remove("invisible");
+        this.victoryBoard.newGame.classList.remove("invisible");
     }
 }
+gameBoard.init();
 
-testArea.clickTest();
